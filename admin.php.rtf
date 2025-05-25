@@ -1,0 +1,47 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <?php\
+namespace AISectionSummaries;\
+\
+class Admin \{\
+    public function __construct() \{\
+        add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );\
+        add_action( 'save_post', [ $this, 'save_meta' ] );\
+    \}\
+\
+    public function register_meta_box() \{\
+        add_meta_box(\
+            'ai_summaries_meta',\
+            'AI Section Summaries',\
+            [ $this, 'render_meta_box' ],\
+            'post',\
+            'normal',\
+            'default'\
+        );\
+    \}\
+\
+    public function render_meta_box( $post ) \{\
+        $meta = get_post_meta( $post->ID );\
+        echo '<ul>';\
+        foreach ( $meta as $key => $value ) \{\
+            if ( strpos( $key, '_ai_summary_' ) === 0 ) \{\
+                echo '<li><textarea style="width:100%" rows="2" name="' . esc_attr( $key ) . '">' . esc_textarea( $value[0] ) . '</textarea></li>';\
+            \}\
+        \}\
+        echo '</ul>';\
+    \}\
+\
+    public function save_meta( $post_id ) \{\
+        foreach ( $_POST as $key => $val ) \{\
+            if ( strpos( $key, '_ai_summary_' ) === 0 ) \{\
+                update_post_meta( $post_id, $key, sanitize_text_field( $val ) );\
+            \}\
+        \}\
+    \}\
+\}\
+}
