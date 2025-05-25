@@ -22,7 +22,7 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/Summarizer.php';\
 require_once plugin_dir_path( __FILE__ ) . 'inc/ContentProcessor.php';\
 require_once plugin_dir_path( __FILE__ ) . 'inc/Admin.php';\
 require_once plugin_dir_path( __FILE__ ) . 'inc/Settings.php';\
-require_once plugin_dir_path( __FILE__ ) . 'inc/TagGenerator.php';\
+
 \
 use AISectionSummaries\\ContentProcessor;\
 use AISectionSummaries\\Admin;\
@@ -43,7 +43,6 @@ register_activation_hook( __FILE__, function () \{\
     add_option( 'ai_section_summaries_settings', [\
         'openai_api_key' => '',\
         'auto_approve' => false,\
-        'generate_tags' => true,\
         'summary_length' => 2\
     ]);\
 \});\
